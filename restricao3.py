@@ -29,22 +29,29 @@ def or_all(list_formulas):
 
 
 def restricao_tres(regras,numeroAtributos):
-    lista_formula = []
-    for sp in range(1, len(matriz)):
-        lista_paciente=[]
+    lista_formula = []  # lista principal que vai guardar o resultado
+    for sp in range(1, len(matriz)): #for que percorre os pacientes
+        lista_paciente=[] # lista que vai ser usada para fazer o and de todos elementos da lista_secundaria
         for i in range(regras):
-            lista_secundaria = []
-            if matriz[sp][3] == "0":
+            lista_secundaria = [] #lista que vai ser usada para guadar os atributos
+            if matriz[sp][3] == "0": #paciente sem patologia
                 for j in range(numeroAtributos):
-                    print(j)
                     if matriz[sp][j] == "0":
-                        lista_secundaria.append(Atom(str(matriz[0][j]) + "_" + str(i+1) + '_' + ('le')))
+                        lista_secundaria.append(Atom(str(matriz[0][j]) + "_" + str(i + 1) + '_' + ('le')))
                     else:
-                       lista_secundaria.append(Atom(str(matriz[0][j]) + "_" + str(i+1) + '_' + ('gt')))
-                lista_paciente.append(or_all(lista_secundaria))
-        lista_formula.append(and_all(lista_paciente))
-    return and_all(lista_formula)
-
+                        lista_secundaria.append(Atom(str(matriz[0][j]) + "_" + str(i + 1) + '_' + ('gt')))
+                if (len(lista_secundaria) != 0 and len(lista_secundaria) != 1):
+                    lista_paciente.append(or_all(lista_secundaria))
+                if (len(lista_secundaria) == 1):
+                    lista_paciente.append(lista_secundaria[0])
+        if (len(lista_paciente) != 0 and len(lista_paciente) != 1):
+           lista_formula.append(and_all(lista_paciente))
+    if (len(lista_formula) != 0 and len(lista_formula) != 1):
+        return and_all(lista_formula)
+    if (len(lista_formula) == 1):
+      return lista_formula[0]
+    else:
+        return []
 
 
 print (restricao_tres(2,3))
