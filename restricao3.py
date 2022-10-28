@@ -30,8 +30,9 @@ def or_all(list_formulas):
 
 def restricao_tres(regras,numeroAtributos):
     lista_formula = []
-    for i in range(regras):
-        for sp in range(1,len(matriz)):
+    for sp in range(1, len(matriz)):
+        lista_paciente=[]
+        for i in range(regras):
             lista_secundaria = []
             if matriz[sp][3] == "0":
                 for j in range(numeroAtributos):
@@ -39,8 +40,9 @@ def restricao_tres(regras,numeroAtributos):
                     if matriz[sp][j] == "0":
                         lista_secundaria.append(Atom(str(matriz[0][j]) + "_" + str(i+1) + '_' + ('le')))
                     else:
-                       lista_secundaria.append(Atom(str(matriz[sp][j]) + "_" + str(i+1) + '_' + ('gt')))
-                lista_formula.append(or_all(lista_secundaria))
+                       lista_secundaria.append(Atom(str(matriz[0][j]) + "_" + str(i+1) + '_' + ('gt')))
+                lista_paciente.append(or_all(lista_secundaria))
+        lista_formula.append(and_all(lista_paciente))
     return and_all(lista_formula)
 
 

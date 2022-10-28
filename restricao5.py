@@ -28,27 +28,25 @@ def or_all(list_formulas):
 
 
 
-
-
-
 def restricao_quatro(regras,numeroAtributos):
     lista_formula = []
-    for sp in range(1, len(matriz)):
-        lista_paciente=[]
-        for i in range(regras):
+    for i in range(regras):
+        for sp in range(1,len(matriz)):
             lista_secundaria = []
             if matriz[sp][3] == "1":
                 for j in range(numeroAtributos):
                     print(j)
                     if matriz[sp][j] == "1":
                         lista_secundaria.append(
-                            Implies(Atom(str(matriz[0][j]) + "_" + str(i + 1) + '_' + ('le')),
-                                    Not(Atom(str('C') + str(i + 1) + '_' + str(sp)))))
+                            Implies( Atom(str(matriz[0][j]) + "_" + str(i+1) + '_' + ('le')),
+                                    Not (Atom(str( 'C')+str(i+1)+'_'+str(sp)))))
                     else:
                         lista_secundaria.append(
                             Implies(Atom(str(matriz[0][j]) + "_" + str(i + 1) + '_' + ('le')),
                                     Not(Atom(str('C') + str(i + 1) + '_' + str(sp)))))
-                lista_paciente.append(or_all(lista_secundaria))
-        lista_formula.append(and_all(lista_paciente))
+                lista_formula.append(or_all(lista_secundaria))
     return and_all(lista_formula)
+
+
+
 print (restricao_quatro(2,3))
