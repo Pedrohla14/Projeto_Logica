@@ -28,25 +28,24 @@ def or_all(list_formulas):
 
 
 
-def restricao_quatro(regras,numeroAtributos):
-    lista_formula = []
-    for i in range(regras):
-        for sp in range(1,len(matriz)):
-            lista_secundaria = []
-            if matriz[sp][3] == "1":
-                for j in range(numeroAtributos):
-                    print(j)
-                    if matriz[sp][j] == "1":
-                        lista_secundaria.append(
-                            Implies( Atom(str(matriz[0][j]) + "_" + str(i+1) + '_' + ('le')),
-                                    Not (Atom(str( 'C')+str(i+1)+'_'+str(sp)))))
-                    else:
-                        lista_secundaria.append(
-                            Implies(Atom(str(matriz[0][j]) + "_" + str(i + 1) + '_' + ('le')),
-                                    Not(Atom(str('C') + str(i + 1) + '_' + str(sp)))))
-                lista_formula.append(or_all(lista_secundaria))
-    return and_all(lista_formula)
+def restricao_cinco(regras):
+    lista_formula = [] # lista principal que vai guardar o resultado
+    for sp in range(1, len(matriz)): #for que percorre os pacientes
+        lista_paciente=[] # guarda temporariamente as informações de um paciente
+        for i in range(regras): #for que percorre as regras
+            lista_paciente.append(Atom(str("C") + "_" + str(sp ) + '_' + str(i+1)))
+
+        if (len(lista_paciente) != 0 and len(lista_paciente) != 1):
+            lista_formula.append(or_all(lista_paciente))
+        if (len(lista_paciente) == 1):
+            lista_formula.append(lista_paciente[0])
+
+    if (len(lista_formula) != 0 and len(lista_formula) != 1):
+        return and_all(lista_formula)
+    if (len(lista_formula) == 1):
+        return lista_formula[0]
+    else:
+        return []
 
 
-
-print (restricao_quatro(2,3))
+print (restricao_cinco(4,3))
