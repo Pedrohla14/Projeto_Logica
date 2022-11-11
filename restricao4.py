@@ -17,7 +17,6 @@ def and_all(list_formulas):
         first_formula = And(first_formula, formula)
     return first_formula
 
-
 def or_all(list_formulas):
 
     first_formula = list_formulas[0]
@@ -25,11 +24,6 @@ def or_all(list_formulas):
     for formula in list_formulas:
         first_formula = Or(first_formula, formula)
     return first_formula
-
-
-
-
-
 
 def restricao_quatro(regras,numeroAtributos):
     lista_formula = [] # lista principal que vai guardar o resultado

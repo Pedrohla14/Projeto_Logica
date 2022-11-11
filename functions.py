@@ -39,7 +39,6 @@ def subformulas(formula):
 
 #  we have shown in class that, for all formula A, len(subformulas(A)) <= length(A).
 
-
 def atoms(formula):
   if(isinstance(formula, Atom)):
     return [formula.name];
